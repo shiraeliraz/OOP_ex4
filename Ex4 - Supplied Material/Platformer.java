@@ -81,4 +81,5 @@ class Avatar extends GameObject {
         if(inputListener.isKeyPressed(KeyEvent.VK_SPACE) && getVelocity().y() == 0)
             transform().setVelocityY(VELOCITY_Y);
     }
+
 }
