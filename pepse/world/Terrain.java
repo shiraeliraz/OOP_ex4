@@ -1,5 +1,6 @@
 package world;
 
+import danogl.collisions.Layer;
 import danogl.gui.rendering.RectangleRenderable;
 import danogl.util.Vector2;
 import util.ColorSupplier;
@@ -25,7 +26,7 @@ public class Terrain {
 	public float groundHeightAt(float x) {
 		NoiseGenerator noise = new NoiseGenerator(seed, (int)groundHeightAtX0 );
 		return groundHeightAtX0 + (float) noise.noise(x, NOISE_FACTOR);
-	} // TODO: make more interesting
+	}
 
 	public List<Block> createInRange(int minX, int maxX) {
 		RectangleRenderable renderable = new RectangleRenderable(

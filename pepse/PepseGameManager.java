@@ -15,9 +15,9 @@ public class PepseGameManager extends GameManager {
 	@Override
 	public void initializeGame(ImageReader imageReader, SoundReader soundReader, UserInputListener inputListener, WindowController windowController) {
 		super.initializeGame(imageReader, soundReader, inputListener, windowController);
-		this.gameObjects().addGameObject(Sky.create(windowController.getWindowDimensions()));
+		this.gameObjects().addGameObject(Sky.create(windowController.getWindowDimensions()), Layer.BACKGROUND);
 		Terrain terrain = new Terrain(windowController.getWindowDimensions(), 0);
-		List<Block> blocks = terrain.createInRange(-50, 120);
+		List<Block> blocks = terrain.createInRange(0, (int)windowController.getWindowDimensions().x());
 		for (Block block : blocks) {
 			this.gameObjects().addGameObject(block, Layer.STATIC_OBJECTS);
 		}
