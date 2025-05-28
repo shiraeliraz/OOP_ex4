@@ -3,7 +3,9 @@ package world;
 import danogl.GameObject;
 import danogl.gui.ImageReader;
 import danogl.gui.UserInputListener;
+import danogl.gui.rendering.AnimationRenderable;
 import danogl.gui.rendering.ImageRenderable;
+import danogl.gui.rendering.Renderable;
 import danogl.util.Vector2;
 
 import java.awt.event.KeyEvent;
@@ -12,7 +14,10 @@ public class Avatar extends GameObject {
 	private static final float VELOCITY_X = 400;
 	private static final float VELOCITY_Y = -650;
 	private UserInputListener inputListener;
+	private ImageReader imageReader;
 	private float energy = 100; // Energy level for jumping
+	private AnimationRenderable idlingRenderable;
+	private AnimationRenderable runningRenderable;
 
 	public Avatar(Vector2 topLeftCorner, UserInputListener inputListener, ImageReader imageReader) {
 		super(topLeftCorner, new Vector2(50, 50), null);
@@ -20,10 +25,34 @@ public class Avatar extends GameObject {
 		this.renderer().setRenderable(avatarRenderable);
 		setTag("Avatar");
 		this.inputListener = inputListener;
+		this.imageReader = imageReader;
+	}
+
+	private void setAnimationRenderables() {
+		String[] idleFrames = {
+			"assets/idle_0.png", "assets/idle_1.png", "assets/idle_2.png", "assets/idle_3.png"
+		};
+		idlingRenderable = new AnimationRenderable(idleFrames, imageReader, true, 0.1f);
+		Renderable[] runningFrames = new Renderable[6];
+		runningFrames[0] = imageReader.readImage("assets/run_0.png", true);
+		runningFrames[1] = imageReader.readImage("assets/run_1.png", true);
+		runningFrames[2] = imageReader.readImage("assets/run_2.png", true);
+		runningFrames[3] = imageReader.readImage("assets/run_3.png", true);
+		runningFrames[4] = imageReader.readImage("assets/run_4.png", true);
+		runningFrames[5] = imageReader.readImage("assets/run_5.png", true);
+		runningRenderable = new AnimationRenderable(runningFrames, 0.1f);
+
 	}
 
 	public int getEnergy() {
 		return (int) energy; // Return energy as an integer
+	}
+
+	public void addEnergy(float amount) {
+		energy += amount;
+		if (energy > 100) {
+			energy = 100; // Cap energy at 100
+		}
 	}
 
 	@Override
@@ -33,10 +62,15 @@ public class Avatar extends GameObject {
 		if(inputListener.isKeyPressed(KeyEvent.VK_LEFT) && energy > 0) {
 			xVel -= VELOCITY_X;
 			energy -= 0.5f; // Decrease energy for moving left
+			renderer().setRenderable(runningRenderable);
+			renderer().setIsFlippedHorizontally(true);
+
+
 		}
 		if(inputListener.isKeyPressed(KeyEvent.VK_RIGHT) && energy > 0) {
 			xVel += VELOCITY_X;
 			energy -= 0.5f; // Decrease energy for moving right
+			renderer().setRenderable(runningRenderable);
 		}
 
 		transform().setVelocityX(xVel);
@@ -46,6 +80,7 @@ public class Avatar extends GameObject {
 		}
 		if (getVelocity().x() == 0 && getVelocity().y() == 0 && energy < 100) {
 			energy += 1;
+			renderer().setRenderable(idlingRenderable);
 		}
 	}
 }
