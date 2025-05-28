@@ -52,7 +52,7 @@ public class PepseGameManager extends GameManager {
 
 	private void createAvatar(ImageReader imageReader, UserInputListener inputListener, WindowController windowController) {
 		avatar = new Avatar(Vector2.ZERO, inputListener, imageReader);
-		gameObjects().addGameObject(avatar);
+		gameObjects().addGameObject(avatar, Layer.FOREGROUND);
 		float xVal = windowController.getWindowDimensions().x() / 2;
 		avatar.setCenter(new Vector2(xVal, terrain.groundHeightAt(xVal) - avatar.getDimensions().y() / 2));
 	}

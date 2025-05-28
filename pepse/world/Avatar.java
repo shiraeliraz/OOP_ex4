@@ -1,6 +1,7 @@
 package world;
 
 import danogl.GameObject;
+import danogl.collisions.Collision;
 import danogl.gui.ImageReader;
 import danogl.gui.UserInputListener;
 import danogl.gui.rendering.AnimationRenderable;
@@ -23,9 +24,11 @@ public class Avatar extends GameObject {
 		super(topLeftCorner, new Vector2(50, 50), null);
 		ImageRenderable avatarRenderable = imageReader.readImage("assets/idle_0.png", true);
 		this.renderer().setRenderable(avatarRenderable);
-		setTag("Avatar");
+		setTag("avatar");
 		this.inputListener = inputListener;
 		this.imageReader = imageReader;
+		setAnimationRenderables();
+		renderer().setRenderable(idlingRenderable);
 	}
 
 	private void setAnimationRenderables() {
@@ -71,6 +74,8 @@ public class Avatar extends GameObject {
 			xVel += VELOCITY_X;
 			energy -= 0.5f; // Decrease energy for moving right
 			renderer().setRenderable(runningRenderable);
+			renderer().setIsFlippedHorizontally(false);
+
 		}
 
 		transform().setVelocityX(xVel);
@@ -81,6 +86,13 @@ public class Avatar extends GameObject {
 		if (getVelocity().x() == 0 && getVelocity().y() == 0 && energy < 100) {
 			energy += 1;
 			renderer().setRenderable(idlingRenderable);
+		}
+	}
+	@Override
+	public void onCollisionEnter(GameObject other, Collision collision) {
+		super.onCollisionEnter(other, collision);
+		if(other.getTag().equals("ground")){
+			this.transform().setVelocityY(0);
 		}
 	}
 }
