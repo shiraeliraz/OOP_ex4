@@ -40,12 +40,14 @@ public class Terrain {
 			float height  = (int)(Math.floor((float) groundHeightAt(x))/blockSize)*blockSize;
 			Vector2 topLeftCorner = new Vector2(x, height);
 			Block startingBlock = new Block(topLeftCorner, renderable);
+			startingBlock.physics().preventIntersectionsFromDirection(Vector2.ZERO);
 			blocks.add(startingBlock);
 			startingBlock.setTag("ground");
 			for (int i =0; i < TERRAIN_DEPTH; i ++) {
 				topLeftCorner = topLeftCorner.add(new Vector2(0, blockSize));
 				Block block = new Block(topLeftCorner, renderable);
 				blocks.add(block);
+				block.physics().preventIntersectionsFromDirection(Vector2.ZERO);
 				block.setTag("ground");
 			}
 		}

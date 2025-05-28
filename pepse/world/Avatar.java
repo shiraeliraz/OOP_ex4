@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 public class Avatar extends GameObject {
 	private static final float VELOCITY_X = 400;
 	private static final float VELOCITY_Y = -650;
+	private static final float GRAVITY = 600;
 	private UserInputListener inputListener;
 	private ImageReader imageReader;
 	private float energy = 100; // Energy level for jumping
@@ -21,14 +22,14 @@ public class Avatar extends GameObject {
 	private AnimationRenderable runningRenderable;
 
 	public Avatar(Vector2 topLeftCorner, UserInputListener inputListener, ImageReader imageReader) {
-		super(topLeftCorner, new Vector2(50, 50), null);
-		ImageRenderable avatarRenderable = imageReader.readImage("assets/idle_0.png", true);
-		this.renderer().setRenderable(avatarRenderable);
+		super(topLeftCorner, new Vector2(50, 50), imageReader.readImage("assets/idle_0.png", true));
+		physics().preventIntersectionsFromDirection(Vector2.ZERO);
 		setTag("avatar");
 		this.inputListener = inputListener;
 		this.imageReader = imageReader;
 		setAnimationRenderables();
 		renderer().setRenderable(idlingRenderable);
+		transform().setAccelerationY(GRAVITY);
 	}
 
 	private void setAnimationRenderables() {
@@ -91,6 +92,7 @@ public class Avatar extends GameObject {
 	@Override
 	public void onCollisionEnter(GameObject other, Collision collision) {
 		super.onCollisionEnter(other, collision);
+		System.out.println("Avatar collided with: " + other.getTag());
 		if(other.getTag().equals("ground")){
 			this.transform().setVelocityY(0);
 		}

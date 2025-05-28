@@ -25,10 +25,16 @@ public class PepseGameManager extends GameManager {
 	@Override
 	public void initializeGame(ImageReader imageReader, SoundReader soundReader, UserInputListener inputListener, WindowController windowController) {
 		super.initializeGame(imageReader, soundReader, inputListener, windowController);
+
+		// Enable collision detection between layers
+		gameObjects().layers().shouldLayersCollide(Layer.STATIC_OBJECTS, Layer.DEFAULT, true);
+
 		// add sky
 		this.gameObjects().addGameObject(Sky.create(windowController.getWindowDimensions()), Layer.BACKGROUND);
-		// create blocks
+
+		// create blocks and terrain first
 		createTerrainAndBlocks(windowController);
+
 		// create night
 		gameObjects().addGameObject(Night.create(windowController.getWindowDimensions(), CYCLE_LENGTH), Layer.BACKGROUND);
 
@@ -41,30 +47,30 @@ public class PepseGameManager extends GameManager {
 		// add sun to the game
 		gameObjects().addGameObject(sun, Layer.BACKGROUND);
 
-		// add avatar
+		// add avatar after terrain is created
 		createAvatar(imageReader, inputListener, windowController);
 
 		// add energy UI
 		GameObject energyUI = EnergyUI.create(avatar);
 		gameObjects().addGameObject(energyUI, Layer.UI);
-
 	}
 
 	private void createAvatar(ImageReader imageReader, UserInputListener inputListener, WindowController windowController) {
-		avatar = new Avatar(Vector2.ZERO, inputListener, imageReader);
-		gameObjects().addGameObject(avatar, Layer.FOREGROUND);
 		float xVal = windowController.getWindowDimensions().x() / 2;
-		avatar.setCenter(new Vector2(xVal, terrain.groundHeightAt(xVal) - avatar.getDimensions().y() / 2));
+		float yVal = terrain.groundHeightAt(xVal) - 55; // Position above ground (avatar height + small buffer)
+
+		avatar = new Avatar(new Vector2(xVal - 25, yVal), inputListener, imageReader); // Center the avatar
+
+		gameObjects().addGameObject(avatar, Layer.DEFAULT);
 	}
 
 	private void createTerrainAndBlocks(WindowController windowController) {
-		terrain = new Terrain(windowController.getWindowDimensions(), SEED	);
+		terrain = new Terrain(windowController.getWindowDimensions(), SEED);
 		List<Block> blocks = terrain.createInRange(0, (int) windowController.getWindowDimensions().x());
 		for (Block block : blocks) {
-			this.gameObjects().addGameObject(block, Layer.STATIC_OBJECTS);
+			gameObjects().addGameObject(block, Layer.STATIC_OBJECTS);
 		}
 	}
-
 
 	public static void main (String[] args) {
 		PepseGameManager gameManager = new PepseGameManager();
