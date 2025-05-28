@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="DanoGameLab">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/pepse/DanoGameLab/DanoGameLab.jar!/" />
+      <root url="jar://$PROJECT_DIR$/DanoGameLab/DanoGameLab.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
