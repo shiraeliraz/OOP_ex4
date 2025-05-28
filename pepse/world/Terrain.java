@@ -6,6 +6,7 @@ import danogl.util.Vector2;
 import util.ColorSupplier;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Terrain {
@@ -27,7 +28,10 @@ public class Terrain {
 	public List<Block> createInRange(int minX, int maxX) {
 		RectangleRenderable renderable = new RectangleRenderable(
 				ColorSupplier.approximateColor(BASE_GROUND_COLOR));
-		Block block = new Block()
-
+		Block block = new Block(Vector2.ZERO, renderable);
+		List <Block> blocks = new ArrayList<>();
+		block.setTag("ground");
+		blocks.add(block);
+		return blocks;
 	}
 }
