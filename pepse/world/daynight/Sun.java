@@ -10,10 +10,11 @@ import java.awt.*;
 
 public class Sun {
 	private static final float TERRAIN_HEIGHT_FACTOR = 2/3f;
+	private static final Vector2 SUN_SIZE = new Vector2(50, 50); // Size of the sun
 
 	public static GameObject create(Vector2 windowDimension, float cycleLength){
 		Vector2 windowCenter = new Vector2(windowDimension.x()/2, windowDimension.y()/2);
-		GameObject sun = new GameObject(windowCenter, new Vector2(50,50), new OvalRenderable(Color.YELLOW));
+		GameObject sun = new GameObject(windowCenter, SUN_SIZE, new OvalRenderable(Color.YELLOW));
 		sun.setCoordinateSpace(CoordinateSpace.CAMERA_COORDINATES);
 		sun.setTag("sun");
 
