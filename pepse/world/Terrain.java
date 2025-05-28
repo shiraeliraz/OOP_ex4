@@ -47,6 +47,7 @@ public class Terrain {
 				blocks.add(block);
 				block.setTag("ground");
 			}
-		}return blocks;
+		}
+		return blocks;
 	}
 }

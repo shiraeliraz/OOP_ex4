@@ -2,6 +2,7 @@ package world;
 
 import danogl.GameObject;
 import danogl.components.CoordinateSpace;
+import danogl.components.Transition;
 import danogl.gui.rendering.RectangleRenderable;
 import danogl.util.Vector2;
 
@@ -16,5 +17,7 @@ public class Sky {
 		sky.setCoordinateSpace(CoordinateSpace.CAMERA_COORDINATES);
 		sky.setTag("sky");
 		return sky;
+
+
 	}
 }
