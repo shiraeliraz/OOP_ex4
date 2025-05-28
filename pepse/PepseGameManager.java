@@ -9,10 +9,14 @@ import world.Block;
 import world.Sky;
 import world.Terrain;
 import world.daynight.Night;
+import world.daynight.Sun;
 
 import java.util.List;
 
 public class PepseGameManager extends GameManager {
+	private static final int CYCLE_LENGTH = 30;
+	private static final int SEED = 45678;
+
 
 	@Override
 	public void initializeGame(ImageReader imageReader, SoundReader soundReader, UserInputListener inputListener, WindowController windowController) {
@@ -20,13 +24,16 @@ public class PepseGameManager extends GameManager {
 		// add sky
 		this.gameObjects().addGameObject(Sky.create(windowController.getWindowDimensions()), Layer.BACKGROUND);
 		// create blocks
-		Terrain terrain = new Terrain(windowController.getWindowDimensions(), 1);
+		Terrain terrain = new Terrain(windowController.getWindowDimensions(), SEED	);
 		List<Block> blocks = terrain.createInRange(0, (int)windowController.getWindowDimensions().x());
 		for (Block block : blocks) {
 			this.gameObjects().addGameObject(block, Layer.STATIC_OBJECTS);
 		}
 		// create night
-		gameObjects().addGameObject(Night.create(windowController.getWindowDimensions(), 30), Layer.BACKGROUND);
+		gameObjects().addGameObject(Night.create(windowController.getWindowDimensions(), CYCLE_LENGTH), Layer.BACKGROUND);
+
+		//create sun
+		gameObjects().addGameObject(Sun.create(windowController.getWindowDimensions(),CYCLE_LENGTH), Layer.BACKGROUND);
 	}
 
 

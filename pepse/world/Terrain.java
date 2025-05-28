@@ -16,11 +16,12 @@ public class Terrain {
 	private static final Color BASE_GROUND_COLOR = new Color(212, 123, 74);
 	private static final int TERRAIN_DEPTH = 20;
 	private static final int NOISE_FACTOR = 220;
+	private static final float TERRAIN_HEIGHT_FACTOR = (float)2/3;
 
 	public Terrain(Vector2 windowDimensions, int seed) {
 		this.windowDimensions = windowDimensions;
 		this.seed = seed;
-		this.groundHeightAtX0 = windowDimensions.y() * (float)2/3;
+		this.groundHeightAtX0 = windowDimensions.y() * TERRAIN_HEIGHT_FACTOR;
 	}
 
 	public float groundHeightAt(float x) {
