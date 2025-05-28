@@ -1,8 +1,4 @@
-import DanoGameLab.src.danogl.GameManager;
-import DanoGameLab.src.danogl.gui.ImageReader;
-import DanoGameLab.src.danogl.gui.SoundReader;
-import DanoGameLab.src.danogl.gui.UserInputListener;
-import DanoGameLab.src.danogl.gui.WindowController;
+import danogl.GameManager;
 
 public class PepseGameManager extends GameManager {
 
