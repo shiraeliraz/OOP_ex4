@@ -20,6 +20,7 @@ public class PepseGameManager extends GameManager {
 	private static final int CYCLE_LENGTH = 30;
 	private static final int SEED = 45678;
 	private Terrain terrain;
+	private Avatar avatar;
 
 	@Override
 	public void initializeGame(ImageReader imageReader, SoundReader soundReader, UserInputListener inputListener, WindowController windowController) {
@@ -43,10 +44,14 @@ public class PepseGameManager extends GameManager {
 		// add avatar
 		createAvatar(imageReader, inputListener, windowController);
 
+		// add energy UI
+		GameObject energyUI = EnergyUI.create(avatar);
+		gameObjects().addGameObject(energyUI, Layer.UI);
+
 	}
 
 	private void createAvatar(ImageReader imageReader, UserInputListener inputListener, WindowController windowController) {
-		Avatar avatar = new Avatar(Vector2.ZERO, inputListener, imageReader);
+		avatar = new Avatar(Vector2.ZERO, inputListener, imageReader);
 		gameObjects().addGameObject(avatar);
 		float xVal = windowController.getWindowDimensions().x() / 2;
 		avatar.setCenter(new Vector2(xVal, terrain.groundHeightAt(xVal) - avatar.getDimensions().y() / 2));
