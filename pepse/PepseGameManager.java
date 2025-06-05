@@ -6,10 +6,7 @@ import danogl.gui.SoundReader;
 import danogl.gui.UserInputListener;
 import danogl.gui.WindowController;
 import danogl.util.Vector2;
-import world.Avatar;
-import world.Block;
-import world.Sky;
-import world.Terrain;
+import world.*;
 import world.daynight.Night;
 import world.daynight.Sun;
 import world.daynight.SunHalo;
@@ -53,6 +50,17 @@ public class PepseGameManager extends GameManager {
 		// add energy UI
 		GameObject energyUI = EnergyUI.create(avatar);
 		gameObjects().addGameObject(energyUI, Layer.UI);
+
+		// create cloud
+		addCloudToGame(windowController);
+
+	}
+
+	private void addCloudToGame(WindowController windowController) {
+		List<Block> cloud = Cloud.createCloud(windowController.getWindowDimensions());
+		for (Block block : cloud) {
+			gameObjects().addGameObject(block, Layer.BACKGROUND);
+		}
 	}
 
 	private void createAvatar(ImageReader imageReader, UserInputListener inputListener, WindowController windowController) {
