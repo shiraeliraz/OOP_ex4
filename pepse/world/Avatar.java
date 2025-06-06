@@ -20,6 +20,8 @@ public class Avatar extends GameObject {
 	private float energy = 100; // Energy level for jumping
 	private AnimationRenderable idlingRenderable;
 	private AnimationRenderable runningRenderable;
+	private AvatarObserver avatarObserver;
+
 
 	public Avatar(Vector2 topLeftCorner, UserInputListener inputListener, ImageReader imageReader) {
 		super(topLeftCorner, new Vector2(50, 50), imageReader.readImage("assets/idle_0.png", true));
@@ -83,6 +85,7 @@ public class Avatar extends GameObject {
 		if(inputListener.isKeyPressed(KeyEvent.VK_SPACE) && getVelocity().y() == 0 && energy >= 10 ) {
 			transform().setVelocityY(VELOCITY_Y);
 			energy -= 10; // Decrease energy for jumping
+			avatarObserver.onAvatarJumped();
 		}
 		if (getVelocity().x() == 0 && getVelocity().y() == 0 && energy < 100) {
 			energy += 1;
@@ -96,5 +99,9 @@ public class Avatar extends GameObject {
 		if(other.getTag().equals("ground")){
 			this.transform().setVelocityY(0);
 		}
+	}
+
+	public void addObserver(AvatarObserver observer) {
+		this.avatarObserver = observer;
 	}
 }

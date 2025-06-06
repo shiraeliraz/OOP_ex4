@@ -57,10 +57,11 @@ public class PepseGameManager extends GameManager {
 	}
 
 	private void addCloudToGame(WindowController windowController) {
-		List<Block> cloud = Cloud.createCloud(windowController.getWindowDimensions());
-		for (Block block : cloud) {
-			gameObjects().addGameObject(block, Layer.BACKGROUND);
-		}
+		Cloud cloud = new Cloud(
+				(GameObject gameObject) -> gameObjects().addGameObject(gameObject, Layer.BACKGROUND),
+				(GameObject gameObject) -> gameObjects().removeGameObject(gameObject, Layer.BACKGROUND),
+				windowController.getWindowDimensions(), SEED);
+		avatar.addObserver(cloud);
 	}
 
 	private void createAvatar(ImageReader imageReader, UserInputListener inputListener, WindowController windowController) {
