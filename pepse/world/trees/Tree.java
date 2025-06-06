@@ -16,14 +16,16 @@ public class Tree {
     private static final float leafCreationLikelihood = 0.7f;
     private static final int baseTreeHeight = 300;
     private static Random rand = new Random();
+    private static final String BARK_TAG = "bark";
+    private static final int MAX_BARK_GROWTH = 50;
+    private static final float HALF_FACTOR =2;
 
 
     public static GameObject createBark(Vector2 topLeftCorner){
         RectangleRenderable barkRenderable = new RectangleRenderable(ColorSupplier.approximateColor(barkColor));
-        Vector2 barkDimensions = new Vector2(barkWidth, baseTreeHeight+rand.nextInt(50));
+        Vector2 barkDimensions = new Vector2(barkWidth, baseTreeHeight+rand.nextInt(MAX_BARK_GROWTH));
         GameObject bark = new GameObject(topLeftCorner, barkDimensions, barkRenderable);
-        bark.setTag("bark");
-        //createTreeTop(topLeftCorner);
+        bark.setTag(BARK_TAG);
         return bark;
     }
 
@@ -31,13 +33,13 @@ public class Tree {
         GameObject[][] treeTop = new GameObject[treeRows][treeColumns];
         Vector2 leafDimensions = Leaf.GetLeafDimensions();
         Vector2 leafTopLeftCorner = new Vector2(
-                topLeftCorner.x()-(leafDimensions.x()*(treeColumns/2)),
-                topLeftCorner.y()-(leafDimensions.y()*(treeRows/2)));
+                topLeftCorner.x()-(leafDimensions.x()*(treeColumns/HALF_FACTOR)),
+                topLeftCorner.y()-(leafDimensions.y()*(treeRows/HALF_FACTOR)));
         for (int i = 0; i < treeRows; i++) {
             for (int j = 0; j < treeColumns; j++) {
                 if (Math.random() < leafCreationLikelihood) {
-                    float x = topLeftCorner.x() - (leafDimensions.x() * (treeColumns / 2f)) + j * leafDimensions.x();
-                    float y = topLeftCorner.y() - (leafDimensions.y() * (treeRows / 2f)) + i * leafDimensions.y();
+                    float x = topLeftCorner.x() - (leafDimensions.x() * (treeColumns / HALF_FACTOR)) + j * leafDimensions.x();
+                    float y = topLeftCorner.y() - (leafDimensions.y() * (treeRows / HALF_FACTOR)) + i * leafDimensions.y();
                     Vector2 leafPos = new Vector2(x, y);
                     treeTop[i][j] = Leaf.createLeaf(leafPos);
                 }

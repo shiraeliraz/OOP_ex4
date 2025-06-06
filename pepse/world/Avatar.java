@@ -110,15 +110,6 @@ public class Avatar extends GameObject {
 	}
 
 
-//	@Override
-//	public void onCollisionStay(GameObject other, Collision collision) {
-//		super.onCollisionStay(other, collision);
-//		if (other.getTag().equals("bark")) {
-//			isTouchingBark = true;
-//
-//		}
-//	}
-
 	@Override
 	public void onCollisionExit(GameObject other) {
 		super.onCollisionExit(other);

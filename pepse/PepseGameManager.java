@@ -26,6 +26,7 @@ public class PepseGameManager extends GameManager {
     @Override
     public void initializeGame(ImageReader imageReader, SoundReader soundReader, UserInputListener inputListener, WindowController windowController) {
         super.initializeGame(imageReader, soundReader, inputListener, windowController);
+        assignLayerCollision();
 
         // Enable collision detection between layers
         gameObjects().layers().shouldLayersCollide(Layer.STATIC_OBJECTS, Layer.DEFAULT, true);
@@ -63,7 +64,7 @@ public class PepseGameManager extends GameManager {
     }
     private void assignLayerCollision(){
         LayerManager layerManager = gameObjects().layers();
-        layerManager.shouldLayersCollide(Layer.STATIC_OBJECTS, Layer.FOREGROUND, false);
+        layerManager.shouldLayersCollide(Layer.DEFAULT, Layer.FOREGROUND, true);
         layerManager.shouldLayersCollide(Layer.STATIC_OBJECTS, Layer.DEFAULT, true);
     }
 
