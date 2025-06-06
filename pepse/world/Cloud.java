@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.function.Consumer;
 
+/**
+ * Represents a cloud in the game world that can generate rain when the avatar jumps.
+ * The cloud moves horizontally across the screen and drops rain at random intervals.
+ */
 public class Cloud implements AvatarObserver{
 	private static final Color BASE_CLOUD_COLOR = new Color(255, 255, 255);
 

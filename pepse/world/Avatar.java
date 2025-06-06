@@ -127,4 +127,3 @@ public class Avatar extends GameObject {
 	}
 
 }
-

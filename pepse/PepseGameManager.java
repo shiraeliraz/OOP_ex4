@@ -17,6 +17,10 @@ import world.trees.Tree;
 import javax.swing.tree.TreeCellRenderer;
 import java.util.List;
 
+/**
+ * PepseGameManager is the main class that initializes and manages the game.
+ * It sets up the game environment, including terrain, avatar, and various game objects.
+ */
 public class PepseGameManager extends GameManager {
     private static final int CYCLE_LENGTH = 30;
     private static final int SEED = 45678;
